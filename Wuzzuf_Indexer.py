@@ -1,5 +1,5 @@
 from pyelasticsearch import ElasticSearch
-from elasticsearch import Elasticsearch
+from elasticsearch import helpers, Elasticsearch
 from collections import defaultdict
 from time import time
 import pandas as pd
@@ -7,7 +7,6 @@ import requests
 import json
 import pprint
 import csv
-
 
 # ======================================================================================== #
 ## Create a map between the user id and any of his/her jobs id
@@ -35,3 +34,18 @@ for i in range(0,len(columns['user_id'])):
 #End of Creatring a dictionary/map to map the user to any of the jobs he/she is interested in
 #We have a map of [User ID] --> [Job ID]
 # ======================================================================================== #
+
+# make sure ES is up and running
+res = requests.get('http://localhost:9200')
+es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
+Wuzzuf_Job_Posts_Sample = r'DataSet/wuzzuf-job-posts-2014-2016/Wuzzuf_Job_Posts_Sample.csv'
+es.indices.create(index='my-index', ignore =400)
+with open(Wuzzuf_Job_Posts_Sample) as f:
+    reader = csv.DictReader(f)
+    for line in reader:
+        #To see the data that will be indexed
+        #pprint.pprint(line)
+        #print ()
+        #The indexing:
+        es.index(index="my-index", doc_type="user",body=line)
+
