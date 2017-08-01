@@ -76,7 +76,7 @@ JobID = '516e4ed'
 #pprint.pprint(Wuzzuf_Job_Posts_Sample_Map[JobID])
 
 pprint.pprint(es.search(index="my-index", doc_type="user",
-          body={'query': {"match": {"city":"Cairo"}}}))
+          body={'query': {"match": {'city':Wuzzuf_Job_Posts_Sample_Map[JobID]['city']}}}))
 '''pprint.pprint(es.search(index="my-index", doc_type="user",
           body={
               'query':
