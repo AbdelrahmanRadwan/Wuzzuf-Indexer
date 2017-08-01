@@ -69,21 +69,30 @@ with open(Wuzzuf_Job_Posts_Sample) as f:
 print("Finish indexing the Wuzzuf_Job_Posts_Sample...")
 #Finish indexing the Wuzzuf_Job_Posts_Sample
 # ======================================================================================== #
-#x= raw_input("PLease Enter user's ID, for simple sample, use this '516e4ed'\n")
+#USerID= raw_input("PLease Enter user's ID, for simple sample, use this '516e4ed'\n")
 USerID='846d013c'
 JobID = Wuzzuf_Applications_Sample_Map[USerID]
 JobID = '516e4ed'
 #pprint.pprint(Wuzzuf_Job_Posts_Sample_Map[JobID])
+
 pprint.pprint(es.search(index="my-index", doc_type="user",
+          body={'query': {"match": {"city":"Cairo"}}}))
+'''pprint.pprint(es.search(index="my-index", doc_type="user",
           body={
               'query':
                   {
-                      "more_like_this" :
-                          {
-                              Wuzzuf_Job_Posts_Sample_Map[JobID]
-                          }
+                    "more_like_this":
+                     {
+                         'city':Wuzzuf_Job_Posts_Sample_Map[JobID]['city'],
+                         'job_title': Wuzzuf_Job_Posts_Sample_Map[JobID]['job_title'],
+                         'job_category1': Wuzzuf_Job_Posts_Sample_Map[JobID]['job_category1'],
+                         'job_industry1': Wuzzuf_Job_Posts_Sample_Map[JobID]['job_industry1'],
+                         'salary_minimum': Wuzzuf_Job_Posts_Sample_Map[JobID]['salary_minimum'],
+                         'career_level': Wuzzuf_Job_Posts_Sample_Map[JobID]['career_level'],
+                         'experience_years': Wuzzuf_Job_Posts_Sample_Map[JobID]['experience_years'],
+                     }
                   }
-               }))
+               }))'''
 
 #Finish using the more like this handler
 # ======================================================================================== #
